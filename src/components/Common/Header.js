@@ -1,4 +1,3 @@
-// src/components/Common/Header.js
 import React from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../../services/auth';
@@ -24,16 +23,36 @@ const Button = styled.button`
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
   cursor: pointer;
-  &:hover { background: #ffffff33; }
+  &:hover {
+    background: #ffffff33;
+  }
+`;
+
+const SettingsLink = styled.a`
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default function Header() {
   const { user, logout } = useAuth();
 
+  if (!user) return null;
+
   return (
     <Bar>
       <Brand>💰 Finance Tracker</Brand>
-      {user && <Button onClick={logout}>Déconnexion</Button>}
+
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <SettingsLink href="/settings">⚙️ Paramètres</SettingsLink>
+        <Button onClick={logout}>Déconnexion</Button>
+      </div>
     </Bar>
   );
 }
